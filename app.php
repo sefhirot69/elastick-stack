@@ -35,7 +35,7 @@ $elasticaClient = new Client(
 );
 
 
-$elasticsearchHandler = new ElasticaHandler($elasticaClient);
+$elasticsearchHandler = new ElasticaHandler($elasticaClient,['index' => 'codelytv']);
 $log->pushHandler($elasticsearchHandler);
 
 // My Application
