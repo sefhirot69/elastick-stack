@@ -2,6 +2,8 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Elasticsearch\ClientBuilder;
+use Monolog\Handler\ElasticaHandler;
 use Monolog\Logger;
 use Elastica\Client;
 use Monolog\Formatter\JsonFormatter;
@@ -32,7 +34,8 @@ $elasticaClient = new Client(
     ]
 );
 
-$elasticsearchHandler = new ElasticSearchHandler($elasticaClient);
+
+$elasticsearchHandler = new ElasticaHandler($elasticaClient);
 $log->pushHandler($elasticsearchHandler);
 
 // My Application
@@ -40,7 +43,7 @@ $options = getopt('a:b:');
 
 # App Servidor A
 if ($options['a'] === 'warning') {
-    $log->warn('Esto es un Warning', ['Servidor' => 'Servidor A']);
+    $log->warning('Esto es un Warning', ['Servidor' => 'Servidor A']);
 } else {
     $log->info('Esto es un Info', ['Servidor' => 'Servidor A']);
 }

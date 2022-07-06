@@ -1,6 +1,7 @@
 {
   "require": {
-    "monolog/monolog": "^2.0",
+    "php": "^7.2 || ^8.0",
+    "monolog/monolog": "^3.0",
     "ruflin/elastica": "^7.0"
   }
 }
