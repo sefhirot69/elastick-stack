@@ -21,22 +21,22 @@ $stdoutHandler->setFormatter($formatter);
 $log->pushHandler($stdoutHandler);
 
 // File Handler
-$fileHandler = new RotatingFileHandler('../var/logs/app.log', 0, Logger::DEBUG);
+$fileHandler = new RotatingFileHandler('var/logs/app.log', 0, Logger::DEBUG);
 $formatter = new JsonFormatter();
 $fileHandler->setFormatter($formatter);
 $log->pushHandler($fileHandler);
 
-// Elasticsearch Handler
-$elasticaClient = new Client(
-    [
-        'host' => 'localhost',
-        'port' => 9200
-    ]
-);
-
-
-$elasticsearchHandler = new ElasticaHandler($elasticaClient,['index' => 'codelytv']);
-$log->pushHandler($elasticsearchHandler);
+//// Elasticsearch Handler
+//$elasticaClient = new Client(
+//    [
+//        'host' => 'localhost',
+//        'port' => 9200
+//    ]
+//);
+//
+//
+//$elasticsearchHandler = new ElasticaHandler($elasticaClient,['index' => 'codelytv']);
+//$log->pushHandler($elasticsearchHandler);
 
 // My Application
 $options = getopt('a:b:');
