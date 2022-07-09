@@ -2,12 +2,8 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Elasticsearch\ClientBuilder;
-use Monolog\Handler\ElasticaHandler;
 use Monolog\Logger;
-use Elastica\Client;
 use Monolog\Formatter\JsonFormatter;
-use Monolog\Handler\ElasticSearchHandler;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\RotatingFileHandler;
 
@@ -20,11 +16,12 @@ $formatter = new JsonFormatter();
 $stdoutHandler->setFormatter($formatter);
 $log->pushHandler($stdoutHandler);
 
-// File Handler
-$fileHandler = new RotatingFileHandler('var/logs/app.log', 0, Logger::DEBUG);
-$formatter = new JsonFormatter();
-$fileHandler->setFormatter($formatter);
-$log->pushHandler($fileHandler);
+for ($i = 0; $i <= 1000; $i++) {
+    // File Handler
+    $fileHandler = new RotatingFileHandler('var/logs/app.log', 0, Logger::DEBUG);
+    $formatter = new JsonFormatter();
+    $fileHandler->setFormatter($formatter);
+    $log->pushHandler($fileHandler);
 
 //// Elasticsearch Handler
 //$elasticaClient = new Client(
@@ -39,18 +36,35 @@ $log->pushHandler($fileHandler);
 //$log->pushHandler($elasticsearchHandler);
 
 // My Application
-$options = getopt('a:b:');
+    $options = ['a', 'b', 'c'];
+    $letter = $options[random_int(0, 2)];
 
 # App Servidor A
-if ($options['a'] === 'warning') {
-    $log->warning('Esto es un Warning', ['Servidor' => 'Servidor A']);
-} else {
-    $log->info('Esto es un Info', ['Servidor' => 'Servidor A']);
-}
+    if ($letter === 'a') {
+        $log->warning('Esto es un Warning', ['Servidor' => 'Servidor '.generateRandomString()]);
+    } else {
+        $log->info('Esto es un Info', ['Servidor' => 'Servidor '.generateRandomString()]);
+    }
 
 # App Servidor B
-if ($options['b'] === 'error') {
-    $log->error('Esto es un Error', ['Servidor' => 'Servidor B']);
-} else {
-    $log->info('Esto es un Info', ['Servidor' => 'Servidor B']);
+    if ($letter === 'b') {
+        $log->error('Esto es un Error', ['Servidor' => 'Servidor '.generateRandomString()]);
+    } else {
+        $log->info('Esto es un Info', ['Servidor' => 'Servidor '.generateRandomString()]);
+    }
+
+# App Servidor C
+    if ($letter === 'c') {
+        $log->info('Esto es un Error', ['Servidor' => 'Servidor '.generateRandomString()]);
+    } else {
+        $log->emergency('Esto es un Info', ['Servidor' => 'Servidor '.generateRandomString()]);
+    }
+}
+
+function generateRandomString()
+{
+    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+
+    return $characters[random_int(0, $charactersLength - 1)];
 }
