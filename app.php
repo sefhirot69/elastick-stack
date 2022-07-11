@@ -16,7 +16,7 @@ $formatter = new JsonFormatter();
 $stdoutHandler->setFormatter($formatter);
 $log->pushHandler($stdoutHandler);
 
-for ($i = 0; $i <= 1000; $i++) {
+for ($i = 0; $i <= 10; $i++) {
     // File Handler
     $fileHandler = new RotatingFileHandler('var/logs/app.log', 0, Logger::DEBUG);
     $formatter = new JsonFormatter();
